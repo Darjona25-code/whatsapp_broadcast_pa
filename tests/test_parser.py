@@ -69,10 +69,10 @@ Carlos Ruiz - carlos@hotmail.com - 6777-8888"""
         self.assertEqual(contacts[2].phone, "+50767778888")
 
     def test_telefono_invalido_marcado(self):
-        """Un teléfono corto se marca para revisión."""
+        """Un teléfono con formato no panameño se marca para revisión."""
         texto = """Pedro Gómez
 pedro@email.com
-123-456"""
+123-4567"""
         contacts = self.parser.parse(texto)
         self.assertEqual(len(contacts), 1)
         self.assertEqual(contacts[0].status, ContactStatus.REVISAR_TELEFONO)

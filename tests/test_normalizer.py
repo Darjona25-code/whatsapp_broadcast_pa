@@ -36,8 +36,8 @@ class TestPhoneNormalizer(unittest.TestCase):
         self.assertTrue(valido)
 
     def test_numero_fijo_es_convertido_pero_marcado(self):
-        numero, valido, _ = PhoneNormalizer.normalize("222-3333")
-        self.assertEqual(numero, "+5072223333")
+        numero, valido, _ = PhoneNormalizer.normalize("222-33333")
+        self.assertEqual(numero, "+50722233333")
         self.assertFalse(valido)
 
     def test_numero_corto_invalido(self):

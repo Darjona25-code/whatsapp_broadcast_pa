@@ -65,11 +65,13 @@ class ContactParser:
                     # El registro en curso empezó con teléfono/correo
                     # y ahora recibe el nombre.
                     current["name"] = name
-            else:
-                if phone:
-                    current["phone"] = phone
-                if email:
-                    current["email"] = email
+
+            # El teléfono y el correo pueden estar en la misma línea
+            # que el nombre (o en líneas siguientes).
+            if phone:
+                current["phone"] = phone
+            if email:
+                current["email"] = email
 
         flush()
         return contacts
@@ -117,10 +119,12 @@ class ContactParser:
         email = current["email"]
 
         status = ContactStatus.VALIDO
-        if not phone:
+        if not phone_raw:
+            # No se encontró ningún número en el texto.
             status = ContactStatus.INCOMPLETO
-            note = note or "Falta número de teléfono"
+            note = "Falta número de teléfono"
         elif not phone_ok:
+            # El número encontrado no parece un móvil panameño válido.
             status = ContactStatus.REVISAR_TELEFONO
         elif not email or not name:
             status = ContactStatus.INCOMPLETO
